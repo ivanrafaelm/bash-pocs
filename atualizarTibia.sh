@@ -1,28 +1,26 @@
 #!/bin/bash
-mkdir -p ~/Tibia
-mkdir -p ~/.tibia/characterdata
-mkdir -p ~/.tibia/conf
-mkdir -p ~/.tibia/minimap
-cd ~/Tibia
-wget http://download.tibia.com/tibia.x64.tar.gz -OTibia.tar.gz
-tar zxvf Tibia.tar.gz
-tibias=$(ls -r | grep tibia)
+userInstallationFolder=$HOME/Tibia
+userDataFolder=$HOME/.tibia
+mkdir -p $userInstallationFolder $userDataFolder/characterdata $userDataFolder/conf $userDataFolder/minimap
+desktopFile=$HOME/.local/share/applications/Tibia.desktop
+wget http://download.tibia.com/tibia.x64.tar.gz -O$userInstallationFolder/Tibia.tar.gz
+tar zxvf $userInstallationFolder/Tibia.tar.gz -C $userInstallationFolder
+tibias=$(ls -r $userInstallationFolder/ | grep tibia)
 set -- $tibias
-cd $1
-rm -rf conf characterdata minimap
-ln -s ~/.tibia/conf $(pwd)
-ln -s ~/.tibia/characterdata $(pwd)
-ln -s ~/.tibia/minimap $(pwd)
+newerTibia=$1
+rm -rf $userInstallationFolder/$newerTibia/conf $userInstallationFolder/$newerTibia/characterdata $userInstallationFolder/$newerTibia/minimap
+ln -s $userDataFolder/conf $userInstallationFolder/$newerTibia
+ln -s $userDataFolder/characterdata $userInstallationFolder/$newerTibia
+ln -s $userDataFolder/minimap $userInstallationFolder/$newerTibia
 echo "[Desktop Entry]
 Encoding=UTF-8
 Type=Application
 Name=Tibia
 Comment=game
-Exec=${HOME}/Tibia/${1}/start-tibia.sh
-Icon=${HOME}/Tibia/${1}/tibia.ico
+Exec=${userInstallationFolder}/${newerTibia}/start-tibia.sh
+Icon=${userInstallationFolder}/${newerTibia}/tibia.ico
 StartupNotify=false
 Terminal=false
-Keywords=tibia" > ~/Desktop/Tibia.desktop
-sudo chmod 644 ~/Desktop/Tibia.desktop
-sudo chmod +x ~/Desktop/Tibia.desktop
-sudo mv -f ~/Desktop/Tibia.desktop /usr/share/applications/
+Keywords=tibia" > $desktopFile
+chmod 644 $desktopFile
+chmod +x $desktopFile
