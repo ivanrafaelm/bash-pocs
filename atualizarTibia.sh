@@ -1,13 +1,11 @@
 #!/bin/bash
-userInstallationFolder=$HOME/Tibia
+userInstallationFolder=$HOME/.tibia/bin
 userDataFolder=$HOME/.tibia
 mkdir -p $userInstallationFolder $userDataFolder/characterdata $userDataFolder/conf $userDataFolder/minimap
 desktopFile=$HOME/.local/share/applications/Tibia.desktop
 wget http://download.tibia.com/tibia.x64.tar.gz -O$userInstallationFolder/Tibia.tar.gz
 tar zxvf $userInstallationFolder/Tibia.tar.gz -C $userInstallationFolder
-tibias=$(ls -r $userInstallationFolder/ | grep tibia)
-set -- $tibias
-newerTibia=$1
+newerTibia=Tibia
 rm -rf $userInstallationFolder/$newerTibia/conf $userInstallationFolder/$newerTibia/characterdata $userInstallationFolder/$newerTibia/minimap
 ln -s $userDataFolder/conf $userInstallationFolder/$newerTibia
 ln -s $userDataFolder/characterdata $userInstallationFolder/$newerTibia
@@ -16,8 +14,8 @@ echo "[Desktop Entry]
 Encoding=UTF-8
 Type=Application
 Name=Tibia
-Comment=game
-Exec=${userInstallationFolder}/${newerTibia}/start-tibia.sh
+Comment=MMORPG
+Exec=${userInstallationFolder}/${newerTibia}/start-tibia-launcher.sh
 Icon=${userInstallationFolder}/${newerTibia}/tibia.ico
 StartupNotify=false
 Terminal=false
